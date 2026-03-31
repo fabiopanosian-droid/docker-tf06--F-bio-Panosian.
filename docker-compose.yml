@@ -1,0 +1,18 @@
+version: '3.8'
+services:
+  web:
+    build: ./nginx
+    image: nginx-custom-tf06:latest
+    ports:
+      - "8080:80"
+    depends_on:
+      - cache
+  cache:
+    image: redis:alpine
+    container_name: redis_cache_tf06
+    volumes:
+      - redis_data:/data
+    command: ["redis-server", "--save", "900", "1"]
+volumes:
+  redis_data:
+    name: redis_data
